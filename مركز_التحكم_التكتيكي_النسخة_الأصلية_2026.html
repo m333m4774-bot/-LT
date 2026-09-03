@@ -1,0 +1,2319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>الشركة السعودية للكهرباء | مركز التحكم التكتيكي الميداني 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --sec-bg: #f8fafc;
+            --sec-surface: #ffffff;
+            --sec-navy: #002060;
+            --sec-navy-dark: #00143d;
+            --sec-blue: #0284c7;
+            --sec-blue-light: #e0f2fe;
+            --sec-border: #e2e8f0;
+            --sec-border-strong: #cbd5e1;
+            --sec-text: #0f172a;
+            --sec-text-muted: #64748b;
+            --sec-green: #10b981;
+            --sec-green-bg: #dcfce7;
+            --sec-red: #dc2626;
+            --sec-red-bg: #fee2e2;
+            --sec-amber: #d97706;
+            --sec-amber-bg: #fef3c7;
+            --sec-purple: #7c3aed;
+            --sec-purple-bg: #f3e8ff;
+            --shadow-sm: 0 1px 2px rgba(0, 32, 96, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 32, 96, 0.08);
+            --shadow-lg: 0 10px 25px rgba(0, 32, 96, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--sec-bg);
+            color: var(--sec-text);
+            min-height: 100vh;
+            padding: 12px;
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 20px; }
+        }
+
+        /* Header Bar */
+        .header {
+            background: linear-gradient(135deg, var(--sec-navy) 0%, #003399 100%);
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+            color: #ffffff;
+        }
+
+        .brand-title {
+            font-size: 18px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+        }
+
+        @media (min-width: 768px) {
+            .brand-title { font-size: 21px; }
+        }
+
+        .brand-title i {
+            color: #38bdf8;
+            font-size: 24px;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .header-actions { width: auto; }
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            background: var(--sec-surface);
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid var(--sec-border);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar { display: none; }
+
+        .nav-tab {
+            background: transparent;
+            border: none;
+            color: var(--sec-text-muted);
+            padding: 9px 14px;
+            border-radius: 9px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .nav-tab:hover {
+            color: var(--sec-navy);
+            background: rgba(0, 32, 96, 0.05);
+        }
+
+        .nav-tab.active {
+            background: var(--sec-navy);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 32, 96, 0.25);
+        }
+
+        /* Smart Search Engine Box */
+        .search-engine-card {
+            background: var(--sec-surface);
+            border: 1px solid var(--sec-border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .search-input-wrapper i {
+            position: absolute;
+            right: 14px;
+            color: var(--sec-blue);
+            font-size: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: #f1f5f9;
+            border: 1.5px solid var(--sec-border);
+            border-radius: 10px;
+            padding: 11px 40px 11px 40px;
+            font-size: 13.5px;
+            color: var(--sec-text);
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            background: #ffffff;
+            border-color: var(--sec-blue);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        .clear-search-btn {
+            position: absolute;
+            left: 12px;
+            background: none;
+            border: none;
+            color: var(--sec-text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Filter Controls */
+        .filter-controls-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            background: #f8fafc;
+            border: 1px solid var(--sec-border-strong);
+            color: var(--sec-text);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .filter-select:focus {
+            border-color: var(--sec-blue);
+        }
+
+        /* Quick Search Chips */
+        .chips-scroll {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+
+        .chips-scroll::-webkit-scrollbar { display: none; }
+
+        .search-chip {
+            background: #f1f5f9;
+            border: 1px solid var(--sec-border);
+            color: var(--sec-navy);
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s;
+        }
+
+        .search-chip:hover, .search-chip.active {
+            background: var(--sec-blue);
+            color: #ffffff;
+            border-color: var(--sec-blue);
+        }
+
+        /* KPI Cards Grid */
+        .grid-kpi {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .grid-kpi { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+        }
+
+        .kpi-card {
+            background: var(--sec-surface);
+            border: 1px solid var(--sec-border);
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .kpi-label {
+            font-size: 11.5px;
+            color: var(--sec-text-muted);
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .kpi-val {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--sec-navy);
+        }
+
+        @media (min-width: 768px) {
+            .kpi-val { font-size: 25px; }
+        }
+
+        .kpi-sub {
+            font-size: 11px;
+            color: var(--sec-text-muted);
+            margin-top: 4px;
+        }
+
+        /* Panels */
+        .panel {
+            background: var(--sec-surface);
+            border: 1px solid var(--sec-border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (min-width: 768px) {
+            .panel { padding: 20px; }
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--sec-border);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .panel-title {
+            font-size: 14.5px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--sec-navy);
+        }
+
+        /* Buttons */
+        .btn-action {
+            background: var(--sec-navy);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-action:hover {
+            background: #003399;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-whatsapp { background: #16a34a; }
+        .btn-whatsapp:hover { background: #15803d; }
+        .btn-danger { background: #dc2626; }
+        .btn-danger:hover { background: #b91c1c; }
+        .btn-purple { background: #7c3aed; }
+        .btn-purple:hover { background: #6d28d9; }
+        .btn-map {
+            background: #0284c7;
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+        }
+        .btn-map:hover { background: #0369a1; }
+        .btn-sm { padding: 5px 8px; font-size: 11px; border-radius: 6px; }
+
+        /* Tables & Responsive Design */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 8px;
+            border: 1px solid var(--sec-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 12.5px;
+            min-width: 650px;
+        }
+
+        th {
+            background: #f1f5f9;
+            color: var(--sec-navy);
+            padding: 10px 8px;
+            font-weight: 800;
+            border-bottom: 2px solid var(--sec-border-strong);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 9px 8px;
+            border-bottom: 1px solid var(--sec-border);
+            color: var(--sec-text);
+            vertical-align: middle;
+            background: #ffffff;
+        }
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+        /* Badges */
+        .badge-status {
+            padding: 3px 8px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .badge-green { background: var(--sec-green-bg); color: #15803d; border: 1px solid #bbf7d0; }
+        .badge-red { background: var(--sec-red-bg); color: #b91c1c; border: 1px solid #fecaca; }
+        .badge-amber { background: var(--sec-amber-bg); color: #b45309; border: 1px solid #fde68a; }
+        .badge-blue { background: var(--sec-blue-light); color: #0369a1; border: 1px solid #bae6fd; }
+        .badge-purple { background: var(--sec-purple-bg); color: #6d28d9; border: 1px solid #ddd6fe; }
+
+        /* Contractor Cards Grid */
+        .contractors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .contractor-card {
+            background: var(--sec-surface);
+            border: 1.5px solid var(--sec-border);
+            border-radius: 12px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contractor-card:hover, .contractor-card.active {
+            border-color: var(--sec-blue);
+            background: #f0f9ff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contractor-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .contractor-name {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--sec-navy);
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+        }
+
+        .modal.show { display: flex; }
+
+        .modal-content {
+            background: #ffffff;
+            border: 1px solid var(--sec-border);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 820px;
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            max-height: 94vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1.5px solid var(--sec-border);
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 600px) {
+            .form-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .form-group { display: flex; flex-direction: column; gap: 4px; }
+        .form-group.full-width { grid-column: span 1; }
+        @media (min-width: 600px) {
+            .form-group.full-width { grid-column: span 2; }
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--sec-navy);
+        }
+
+        .form-control {
+            background: #f8fafc;
+            border: 1px solid var(--sec-border-strong);
+            color: var(--sec-text);
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--sec-blue);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        /* OFFICIAL MINUTE DOCUMENT (SEC / Saud Consult Template) */
+        .official-minute-container {
+            background: #ffffff;
+            color: #0f172a;
+            border: 2px solid var(--sec-navy);
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 12px;
+        }
+
+        .sec-banner {
+            background: #f1f5f9;
+            color: var(--sec-navy);
+            text-align: center;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 6px;
+            border: 1px solid var(--sec-border-strong);
+            margin-bottom: 8px;
+            margin-top: 12px;
+        }
+
+        .official-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        .official-table th, .official-table td {
+            border: 1px solid var(--sec-border-strong);
+            padding: 6px 8px;
+            color: #0f172a;
+        }
+
+        .official-table th {
+            background: var(--sec-navy);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .official-table .label-cell {
+            background: #f8fafc;
+            font-weight: 700;
+            color: var(--sec-navy);
+            width: 130px;
+        }
+
+        /* DIRECTOR'S EXECUTIVE BRIEFING VIEW */
+        .director-brief {
+            background: #ffffff;
+            border: 2px solid var(--sec-navy);
+            border-radius: 12px;
+            padding: 24px;
+            color: #0f172a;
+        }
+
+        .director-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--sec-navy);
+            padding-bottom: 14px;
+            margin-bottom: 16px;
+        }
+
+        .director-section-title {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--sec-navy);
+            border-right: 4px solid var(--sec-blue);
+            padding-right: 8px;
+            margin: 16px 0 10px 0;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Handout Card */
+        .handout-box {
+            background: #ffffff;
+            border: 1.5px solid var(--sec-border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Toast notifications */
+        #toastBox {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--sec-navy);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            font-weight: 700;
+            display: none;
+            z-index: 9999;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Print Styling */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0 !important;
+                font-size: 10pt !important;
+            }
+            .header, .nav-tabs, .search-engine-card, .header-actions, .btn-action, .clear-search-btn, .modal, #toastBox {
+                display: none !important;
+            }
+            .panel, .director-brief, .official-minute-container {
+                border: 1px solid #000000 !important;
+                box-shadow: none !important;
+                padding: 10px !important;
+                margin: 0 !important;
+            }
+            table {
+                width: 100% !important;
+                min-width: 0 !important;
+                font-size: 9pt !important;
+            }
+            th {
+                background: #e2e8f0 !important;
+                color: #000000 !important;
+                border: 1px solid #000000 !important;
+            }
+            td {
+                border: 1px solid #666666 !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+            .badge-status {
+                border: 1px solid #000000 !important;
+                background: none !important;
+                color: #000000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toastBox"><i class="fa-solid fa-circle-check text-green"></i> <span id="toastMsg">تم الإجراء بنجاح</span></div>
+
+    <!-- Top Light Header -->
+    <div class="header">
+        <div>
+            <div class="brand-title">
+                <i class="fa-solid fa-bolt-lightning"></i>
+                الشركة السعودية للكهرباء | مركز العمليات والتحكم التكتيكي 2026
+            </div>
+            <div style="font-size: 12px; color: #e0f2fe; margin-top: 3px;">
+                إدارة العمليات والصيانة بجدة • شبكات الجهد المنخفض (سجل 141 معاملة • الحوكمة الميدانية • نظام المهل SLA)
+            </div>
+        </div>
+        <div class="header-actions">
+            <input type="file" id="excelFileInput" accept=".xlsx, .xls" style="display: none;" onchange="importExcelFile(event)">
+            <input type="file" id="jsonFileInput" accept=".json" style="display: none;" onchange="importJsonBackup(event)">
+            <button onclick="document.getElementById('excelFileInput').click()" class="btn-action" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);">
+                <i class="fa-solid fa-file-import"></i> استيراد Excel
+            </button>
+            <button onclick="openNewTicketModal()" class="btn-action" style="background: var(--sec-green);">
+                <i class="fa-solid fa-plus-circle"></i> إضافة بلاغ
+            </button>
+            <button onclick="exportToExcelFile()" class="btn-action" style="background: var(--sec-blue);">
+                <i class="fa-solid fa-file-excel"></i> تصدير Excel
+            </button>
+            <button onclick="exportJsonBackup()" class="btn-action" style="background: #334155;" title="تنزيل نسخة احتياطية سريعة JSON">
+                <i class="fa-solid fa-download"></i> نسخة احتياطية
+            </button>
+            <button onclick="document.getElementById('jsonFileInput').click()" class="btn-action" style="background: #475569;" title="استعادة نسخة احتياطية JSON">
+                <i class="fa-solid fa-upload"></i> استعادة
+            </button>
+            <button onclick="window.print()" class="btn-action" style="background: #475569;">
+                <i class="fa-solid fa-print"></i> طباعة الشامل
+            </button>
+            <button onclick="resetToDefaults()" class="btn-action btn-danger" title="استعادة الـ 141 بلاغاً الأصلية">
+                <i class="fa-solid fa-rotate-right"></i> استعادة (141)
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('tab-overview', this)"><i class="fa-solid fa-gauge-high"></i> لوحة القيادة (War Room)</button>
+        <button class="nav-tab" onclick="switchTab('tab-director-brief', this)"><i class="fa-solid fa-file-signature text-blue"></i> تقرير مدير الإدارة التنفيذي 📑</button>
+        <button class="nav-tab" onclick="switchTab('tab-operations', this)"><i class="fa-solid fa-list-check"></i> العمليات والمحاضر (141 معاملة)</button>
+        <button class="nav-tab" onclick="switchTab('tab-contractors', this)"><i class="fa-solid fa-paper-plane"></i> جداول المقاولين السبعة</button>
+        <button class="nav-tab" onclick="switchTab('tab-serial', this)"><i class="fa-solid fa-receipt"></i> تبنيد أرقام المحاضر</button>
+        <button class="nav-tab" onclick="switchTab('tab-directory', this)"><i class="fa-solid fa-address-book"></i> دليل المقاولين والإيميلات</button>
+    </div>
+
+    <!-- Smart Search Engine Bar -->
+    <div class="search-engine-card">
+        <div class="search-input-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="smartSearchInput" class="search-input" placeholder="🔍 ابحث بذكاء: اكتب 'أقصر الكابلات'، 'أطولهم'، 'حي الصفا'، 'مستورة'، 'مولد'، '45231180'..." oninput="handleSmartSearch(this.value)">
+            <button id="clearSearchBtn" class="clear-search-btn" onclick="clearSmartSearch()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="filter-controls-row">
+            <select id="filterContractorSelect" class="filter-select" onchange="handleDropdownFilter()">
+                <option value="">جميع المقاولين (الكل)</option>
+                <option value="مستورة">مستورة</option>
+                <option value="إيجاب">إيجاب</option>
+                <option value="الجناحين">الجناحين</option>
+                <option value="ببكو">ببكو</option>
+                <option value="الجوان">الجوان</option>
+                <option value="العالمية">العالمية</option>
+                <option value="أبراج الطاقة">أبراج الطاقة</option>
+                <option value="لم يتم التوجيه">لم يتم التوجيه</option>
+            </select>
+
+            <select id="filterFeedSelect" class="filter-select" onchange="handleDropdownFilter()">
+                <option value="">نوع التغذية (الكل)</option>
+                <option value="كابل مؤقت">كابل مؤقت</option>
+                <option value="مولد">مولد</option>
+            </select>
+
+            <select id="filterDistrictSelect" class="filter-select" onchange="handleDropdownFilter()">
+                <option value="">جميع الأحياء (الكل)</option>
+            </select>
+        </div>
+
+        <div class="chips-scroll">
+            <span style="font-size: 11px; font-weight: 800; color: var(--sec-text-muted); align-self: center; margin-left: 4px;">فلاتر سريعة:</span>
+            <button class="search-chip" onclick="applyQuickChip('معاملات متبقية')"><i class="fa-solid fa-folder-open"></i> معاملات متبقية (71)</button>
+            <button class="search-chip" onclick="applyQuickChip('تقرير عام')"><i class="fa-solid fa-chart-pie"></i> التقرير العام (70)</button>
+            <button class="search-chip" onclick="applyQuickChip('لم يتم التوجيه')"><i class="fa-solid fa-circle-question text-purple"></i> لم يتم التوجيه (56)</button>
+            <button class="search-chip" onclick="applyQuickChip('أقصر الكابلات')"><i class="fa-solid fa-arrow-down-short-wide"></i> أقصر الكابلات</button>
+            <button class="search-chip" onclick="applyQuickChip('أطول الكابلات')"><i class="fa-solid fa-arrow-up-wide-short"></i> أطول الكابلات (مربعات)</button>
+            <button class="search-chip" onclick="applyQuickChip('لم يتم التحديث')"><i class="fa-solid fa-triangle-exclamation text-red"></i> لم يتم التحديث (> يومين) 🚨</button>
+            <button class="search-chip" onclick="applyQuickChip('تم الإنجاز')"><i class="fa-solid fa-circle-check text-green"></i> تم الإنجاز</button>
+            <button class="search-chip" onclick="applyQuickChip('جاري العمل')"><i class="fa-solid fa-clock text-amber"></i> جاري العمل</button>
+            <button class="search-chip" onclick="applyQuickChip('مولد')"><i class="fa-solid fa-plug-circle-bolt text-purple"></i> مولدات طوارئ</button>
+            <button class="search-chip" onclick="applyQuickChip('حي الصفا')"><i class="fa-solid fa-location-dot"></i> حي الصفا</button>
+            <button class="search-chip" onclick="applyQuickChip('حي البوادي')"><i class="fa-solid fa-location-dot"></i> حي البوادي</button>
+            <button class="search-chip" onclick="applyQuickChip('حي السلامة')"><i class="fa-solid fa-location-dot"></i> حي السلامة</button>
+        </div>
+    </div>
+
+    <!-- TAB 1: EXECUTIVE WAR ROOM -->
+    <div id="tab-overview" class="tab-content active">
+        <div class="grid-kpi">
+            <div class="kpi-card" style="border-top: 3px solid var(--sec-blue);">
+                <div class="kpi-label">إجمالي البلاغات المسندة <i class="fa-solid fa-clipboard-list text-blue"></i></div>
+                <div class="kpi-val" id="dash-total-tickets">141</div>
+                <div class="kpi-sub">المسندة لكافة المقاولين المعتمدين</div>
+            </div>
+
+            <div class="kpi-card" style="border-top: 3px solid var(--sec-green);">
+                <div class="kpi-label">المنجز المكتمل بنجاح <i class="fa-solid fa-circle-check text-green"></i></div>
+                <div class="kpi-val" style="color: var(--sec-green);" id="dash-done-tickets">14</div>
+                <div class="kpi-sub" id="dash-done-pct">تيار مطلوق نهائياً</div>
+            </div>
+
+            <div class="kpi-card" style="border-top: 3px solid var(--sec-amber);">
+                <div class="kpi-label">أعطال قيد التنفيذ والمتابعة <i class="fa-solid fa-clock text-amber"></i></div>
+                <div class="kpi-val" style="color: var(--sec-amber);" id="dash-pending-tickets">127</div>
+                <div class="kpi-sub">فرق ميدانية تعمل على المسارات</div>
+            </div>
+
+            <div class="kpi-card" style="border-top: 3px solid var(--sec-purple);">
+                <div class="kpi-label">مواقع المولدات المؤقتة ⚡ <i class="fa-solid fa-plug-circle-bolt text-purple"></i></div>
+                <div class="kpi-val" style="color: var(--sec-purple);" id="dash-generators-count">0</div>
+                <div class="kpi-sub">تتطلب استبدالاً عاجلاً</div>
+            </div>
+
+            <div class="kpi-card" style="border-top: 3px solid #0891b2;">
+                <div class="kpi-label">إجمالي أطوال الكابلات 📏 <i class="fa-solid fa-ruler-combined"></i></div>
+                <div class="kpi-val" style="color: #0891b2;" id="dash-total-meters">0 م</div>
+                <div class="kpi-sub">مجموع أطوال الإحلال والمربعات</div>
+            </div>
+
+            <div class="kpi-card" style="border-top: 3px solid var(--sec-red);">
+                <div class="kpi-label">لم يتم التحديث (> يومين) 🚨 <i class="fa-solid fa-triangle-exclamation text-red"></i></div>
+                <div class="kpi-val" style="color: var(--sec-red);" id="dash-breach-tickets">0</div>
+                <div class="kpi-sub" id="dash-total-penalties">مصعدة تلقائياً للمساءلة</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title"><i class="fa-solid fa-ranking-star"></i> مصفوفة المساءلة وتقييم المقاولين السبعة وتتبع الإنجاز</div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المقاول</th>
+                            <th>الفرق الميدانية</th>
+                            <th>البلاغات المسندة</th>
+                            <th>المنجز الفعلي</th>
+                            <th>المتبقي في الميدان</th>
+                            <th>الأعطال المتأخرة</th>
+                            <th>الغرامات المستحقة</th>
+                            <th>البريد الإلكتروني المباشر ✉️</th>
+                            <th>التقييم التشغيلي والتوجيه الإداري</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dash-contractors-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: DIRECTOR'S EXECUTIVE BRIEFING REPORT (تقرير مدير الإدارة التنفيذي) -->
+    <div id="tab-director-brief" class="tab-content">
+        <div class="panel">
+            <div style="display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px;">
+                <button onclick="printDirectorBrief()" class="btn-action" style="background: var(--sec-navy);">
+                    <i class="fa-solid fa-print"></i> طباعة التقرير التنفيذي لمدير الإدارة (A4)
+                </button>
+            </div>
+
+            <div class="director-brief" id="printableDirectorArea">
+                <div class="director-header">
+                    <div>
+                        <div style="font-size: 13px; font-weight: 900; color: var(--sec-navy);">الشركة السعودية للكهرباء (Saudi Electricity Company)</div>
+                        <div style="font-size: 11px; color: var(--sec-text-muted);">إدارة العمليات والصيانة بجدة • قسم شبكات الجهد المنخفض</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 16px; font-weight: 900; color: var(--sec-navy);">التقرير التنفيذي الشامل لمتابعة أعطال الجهد المنخفض</div>
+                        <div style="font-size: 11px; color: var(--sec-text-muted);" id="briefDateText">التاريخ: 03 سبتمبر 2026م</div>
+                    </div>
+                    <div style="text-align: left;">
+                        <div style="font-size: 12px; font-weight: 800; color: var(--sec-navy);">سري وعاجل</div>
+                        <div style="font-size: 10px; color: var(--sec-text-muted);">نسخة سعادة مدير الإدارة</div>
+                    </div>
+                </div>
+
+                <div class="director-section-title">أولاً: الموقف التشغيلي العام لشبكة الجهد المنخفض بجدة</div>
+                <table class="official-table">
+                    <thead>
+                        <tr>
+                            <th>إجمالي البلاغات المسندة</th>
+                            <th>المنجز المكتمل بنجاح</th>
+                            <th>قيد العمل والمتابعة</th>
+                            <th>التغذية المؤقتة القائمة</th>
+                            <th>الأعطال المصعدة والمتأخرة 🚨</th>
+                            <th>نسبة تحقيق المستهدف العام</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="font-weight: 800; font-size: 13px;">
+                            <td id="briefTotal">141</td>
+                            <td style="color: var(--sec-green);" id="briefDone">14</td>
+                            <td style="color: var(--sec-amber);" id="briefPending">127</td>
+                            <td id="briefTemp">141</td>
+                            <td style="color: var(--sec-red);" id="briefBreach">0</td>
+                            <td style="color: var(--sec-blue);" id="briefPct">10%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="director-section-title">ثانياً: تقييم إنتاجية وجاهزية المقاولين السبعة المعتمدين</div>
+                <table class="official-table" id="briefContractorsTable">
+                    <thead>
+                        <tr>
+                            <th>المقاول</th>
+                            <th>الفرق الميدانية</th>
+                            <th>المسند</th>
+                            <th>المنجز</th>
+                            <th>قيد التنفيذ</th>
+                            <th>نسبة الإنجاز</th>
+                            <th>التصنيف التشغيلي والتوجيه الإداري</th>
+                        </tr>
+                    </thead>
+                    <tbody id="briefContractorsTbody"></tbody>
+                </table>
+
+                <div class="director-section-title">ثالثاً: كابلات المربعات الكبرى والأولويات الحرجة للمتابعة المباشرة (أطول المسارات)</div>
+                <table class="official-table">
+                    <thead>
+                        <tr>
+                            <th>رقم المهمة</th>
+                            <th>المقاول</th>
+                            <th>الحي</th>
+                            <th>المحطة</th>
+                            <th>الطول الفعلي</th>
+                            <th>المهلة المحددة</th>
+                            <th>موقف المسار</th>
+                        </tr>
+                    </thead>
+                    <tbody id="briefCriticalTbody"></tbody>
+                </table>
+
+                <div class="director-section-title">رابعاً: التوصيات والقرارات التشغيلية المرفوعة لسعادة مدير الإدارة للاعتماد</div>
+                <div style="background: #f8fafc; border: 1px solid var(--sec-border-strong); border-radius: 8px; padding: 14px; font-size: 12px; line-height: 1.8; margin-bottom: 20px;">
+                    1. <strong>إعادة توزيع المسارات:</strong> سحب عدد (5) بلاغات إحلال من المقاولين ذوي وتيرة العمل المنخفضة وتحويلها إلى مقاولي الصدارة (ببكو وإيجاب) لضمان استقرار الشبكة.<br>
+                    2. <strong>تطبيق قاعدة الـ 48 ساعة للحوكمة:</strong> إلزام كافة المقاولين بتحديث حالات التنفيذ يومياً، واعتبار أي عطل يتجاوز 48 ساعة دون إفادة ميدانية عطلاً مصعداً لمجلس إدارة العقود.<br>
+                    3. <strong>تحرير المولدات والكابلات المؤقتة:</strong> التوجيه بسرعة فك وسحب المولدات فور إطلاق التيار واختبار العزل لتقليل النفقات التشغيلية.
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; text-align: center; font-size: 12px; padding-top: 14px; border-top: 1.5px dashed var(--sec-border-strong);">
+                    <div>
+                        <strong>إعداد المشرف الميداني:</strong><br><br>
+                        <strong>ماجد الخيبري</strong><br>
+                        التوقيع: ...........................
+                    </div>
+                    <div>
+                        <strong>مراجعة رئيس قسم العمليات:</strong><br><br>
+                        <strong>م. سامي الحربي</strong><br>
+                        التوقيع: ...........................
+                    </div>
+                    <div>
+                        <strong>اعتماد مدير دائرة العمليات والصيانة:</strong><br><br>
+                        <strong>م. أحمد هريدي</strong><br>
+                        الاعتماد: ...........................
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: OPERATIONS LIVE LOG -->
+    <div id="tab-operations" class="tab-content">
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title"><i class="fa-solid fa-list-check"></i> سجل العمليات والمحاضر (تعديل • محضر • خرائط Google • إيميل)</div>
+                <div class="chips-scroll">
+                    <button class="search-chip active" onclick="filterOperationsTable('ALL', this)">كافة المعاملات (<span id="op-count-all">141</span>)</button>
+                    <button class="search-chip" onclick="filterOperationsTable('DONE', this)">تم الإنجاز 🟢</button>
+                    <button class="search-chip" onclick="filterOperationsTable('PENDING', this)">قيد العمل بالموقع ⏳</button>
+                    <button class="search-chip" onclick="filterOperationsTable('ESCALATED', this)">لم يتم التحديث (مصعد) 🚨</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>م</th>
+                            <th>المقاول</th>
+                            <th>رقم المهمة</th>
+                            <th>الحي والمحطة</th>
+                            <th>الموقع والخرائط 📍</th>
+                            <th>التغذية</th>
+                            <th>نوع العمل</th>
+                            <th>الطول</th>
+                            <th>المهلة</th>
+                            <th>المسار من -> إلى</th>
+                            <th>حالة التنفيذ</th>
+                            <th>المصدر</th>
+                            <th>إجراءات سريعة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="operationsTbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: CONTRACTOR DISPATCH -->
+    <div id="tab-contractors" class="tab-content">
+        <div class="contractors-grid" id="contractorSelectorGrid"></div>
+
+        <div class="panel">
+            <div class="handout-box">
+                <div>
+                    <div style="font-size: 16px; font-weight: 800; color: var(--sec-navy);" id="activeContractorName">
+                        جدول التكليف الميداني لمقاول
+                    </div>
+                    <div style="font-size: 12px; color: var(--sec-text-muted); margin-top: 3px;" id="activeContractorMeta"></div>
+                </div>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button class="btn-action" onclick="sendContractorDirectEmail()">
+                        <i class="fa-solid fa-envelope"></i> إرسال جدول التكليف للإيميل
+                    </button>
+                    <button class="btn-action btn-whatsapp" onclick="sendContractorWhatsAppTable()">
+                        <i class="fa-brands fa-whatsapp"></i> إرسال عبر واتساب
+                    </button>
+                    <button class="btn-action btn-danger" onclick="sendContractorPenaltyNotice()">
+                        <i class="fa-solid fa-triangle-exclamation"></i> إرسال إنذار ومحضر
+                    </button>
+                    <button class="btn-action" style="background: #475569;" onclick="window.print()">
+                        <i class="fa-solid fa-print"></i> طباعة جدول المقاول
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم المهمة</th>
+                            <th>الحي</th>
+                            <th>المحطة</th>
+                            <th>الموقع والخرائط 📍</th>
+                            <th>نوع العمل</th>
+                            <th>الطول</th>
+                            <th>المهلة</th>
+                            <th>المسار</th>
+                            <th>حالة التنفيذ</th>
+                            <th>مؤشر الالتزام</th>
+                            <th>نموذج المخالفة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contractorHandoutTbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 5: SERIAL MINUTES REGISTRY -->
+    <div id="tab-serial" class="tab-content">
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title"><i class="fa-solid fa-receipt"></i> سجل تبنيد وحصر أرقام المحاضر الرسمية الصادرة</div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم المحضر</th>
+                            <th>تاريخ المحضر</th>
+                            <th>اسم المقاول</th>
+                            <th>رقم أمر العمل / البلاغ</th>
+                            <th>بند الغرامة المطبق</th>
+                            <th>قيمة الغرامة</th>
+                            <th>حالة السداد / الحسم</th>
+                        </tr>
+                    </thead>
+                    <tbody id="serialTbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 6: DIRECTORY OF CONTRACTOR EMAILS -->
+    <div id="tab-directory" class="tab-content">
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title"><i class="fa-solid fa-address-book"></i> دليل التواصل والإيميلات الرسمية للمقاولين السبعة</div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم المقاول</th>
+                            <th>كود المقاول</th>
+                            <th>مدير المشروع المسؤول</th>
+                            <th>البريد الإلكتروني الرسمي ✉️</th>
+                            <th>رقم الهاتف المباشر</th>
+                            <th>الفرق الميدانية</th>
+                            <th>المتبقي التراكمي</th>
+                            <th>مراسلة مباشرة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="directoryTbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: ADD / EDIT TICKET MODAL -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content" style="max-width: 860px;">
+            <div class="modal-header">
+                <div style="font-size: 16px; font-weight: 800; color: var(--sec-navy);" id="modalTicketTitle">
+                    <i class="fa-solid fa-pen-to-square text-blue"></i> تعديل كافة بيانات المعاملة
+                </div>
+                <button onclick="closeModal('ticketModal')" style="background: none; border: none; color: var(--sec-text-muted); font-size: 24px; cursor: pointer; line-height: 1;">&times;</button>
+            </div>
+
+            <form id="ticketForm" onsubmit="saveTicket(event)">
+                <input type="hidden" id="editTicketIndex" value="-1">
+                
+                <div style="font-size: 13px; font-weight: 800; color: var(--sec-navy); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 2px solid var(--sec-blue); display: flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-file-invoice" style="color: var(--sec-blue);"></i> 1. بيانات المعاملة والموقع الجغرافي
+                </div>
+                <div class="form-grid" style="margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>رقم المهمة / المعاملة</label>
+                        <input type="text" id="modalTicket" class="form-control" placeholder="مثال: 45231180" required>
+                    </div>
+                    <div class="form-group">
+                        <label>المقاول المسؤول</label>
+                        <select id="modalContractor" class="form-control" required>
+                            <option value="لم يتم التوجيه">لم يتم التوجيه (غير مسند)</option>
+                            <option value="مستورة">مستورة</option>
+                            <option value="إيجاب">إيجاب</option>
+                            <option value="الجناحين">الجناحين</option>
+                            <option value="ببكو">ببكو</option>
+                            <option value="الجوان">الجوان</option>
+                            <option value="العالمية">العالمية</option>
+                            <option value="أبراج الطاقة">أبراج الطاقة</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>الحي / المنطقة</label>
+                        <input type="text" id="modalDistrict" class="form-control" placeholder="مثال: الصفا" required>
+                    </div>
+                    <div class="form-group">
+                        <label>رقم المحطة</label>
+                        <input type="text" id="modalSubstation" class="form-control" placeholder="مثال: 30728" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>مصدر المعاملة</label>
+                        <select id="modalSource" class="form-control">
+                            <option value="معاملات_متبقية">معاملات متبقية (71)</option>
+                            <option value="التقرير_العام">التقرير العام (70)</option>
+                            <option value="إدخال_ميداني_مباشر">إدخال ميداني مباشر</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="font-size: 13px; font-weight: 800; color: var(--sec-navy); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 2px solid var(--sec-blue); display: flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-network-wired" style="color: var(--sec-blue);"></i> 2. المواصفات الفنية ومسار الكابل
+                </div>
+                <div class="form-grid" style="margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>طول الكابل (متر) 📏</label>
+                        <input type="number" id="modalLength" class="form-control" placeholder="مثال: 60" oninput="calculateAutoSLA()" required>
+                    </div>
+                    <div class="form-group">
+                        <label>مقاس الكابل</label>
+                        <input type="text" id="modalCableSize" class="form-control" placeholder="مثال: 300 أو 185 أو 70" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نوع العمل والتصنيف</label>
+                        <select id="modalClassification" class="form-control" required>
+                            <option value="احلال">احلال (مسار عادي)</option>
+                            <option value="مربع">مربع (مسار طويل > 80م)</option>
+                            <option value="صيانة طارئة">صيانة طارئة</option>
+                            <option value="استبدال قاطع">استبدال قاطع</option>
+                            <option value="صندوق توزيع">صندوق توزيع</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>نوع التغذية القائمة</label>
+                        <select id="modalFeed" class="form-control" required>
+                            <option value="كابل مؤقت">كابل مؤقت</option>
+                            <option value="مولد">مولد طوارئ</option>
+                            <option value="شبكة دائمة">شبكة دائمة (بدون مؤقت)</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>المسار الميداني (من -> إلى والسوتشات)</label>
+                        <input type="text" id="modalFromTo" class="form-control" placeholder="مثال: 30728 (س6 يمين) -> 2637/5251" required>
+                    </div>
+                </div>
+
+                <div style="font-size: 13px; font-weight: 800; color: var(--sec-navy); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 2px solid var(--sec-blue); display: flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: var(--sec-blue);"></i> 3. المهل الزمنية والتواريخ وحالة التنفيذ
+                </div>
+                <div class="form-grid" style="margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>حالة التنفيذ المعتمدة</label>
+                        <select id="modalStatus" class="form-control" onchange="handleModalStatusChange()" required>
+                            <option value="جاري العمل">جاري العمل</option>
+                            <option value="تم تسليم المقاول">تم تسليم المقاول</option>
+                            <option value="ملاحظة">ملاحظة ⚠️</option>
+                            <option value="لم يتم التوجيه">لم يتم التوجيه</option>
+                            <option value="تم الإنجاز">تم الإنجاز 🟢</option>
+                            <option value="لم يتم التحديث (مصعد)">لم يتم التحديث (مصعد) 🚨</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>المهلة المحددة (أيام SLA)</label>
+                        <input type="number" id="modalSLA" class="form-control" min="1" max="30" value="2" required>
+                    </div>
+                    <div class="form-group">
+                        <label>تاريخ الإسناد / البلاغ</label>
+                        <input type="date" id="modalAssignDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>تاريخ الإنجاز الفعلي (إطلاق التيار)</label>
+                        <input type="date" id="modalDoneDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>أيام العمل المنقضية</label>
+                        <input type="number" id="modalDays" class="form-control" min="0" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>مؤشر الالتزام (Compliance)</label>
+                        <select id="modalCompliance" class="form-control">
+                            <option value="⏳ جاري ضمن المهلة">⏳ جاري ضمن المهلة</option>
+                            <option value="منجز ضمن المهلة ✅">منجز ضمن المهلة ✅</option>
+                            <option value="لم يتم التوجيه">لم يتم التوجيه</option>
+                            <option value="🚨 مصعد للمساءلة">🚨 مصعد للمساءلة</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="font-size: 13px; font-weight: 800; color: var(--sec-navy); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 2px solid var(--sec-blue); display: flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-comment-dots" style="color: var(--sec-blue);"></i> 4. الإفادة الميدانية وملاحظات الطوارئ ✍️
+                </div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <textarea id="modalNote" class="form-control" rows="3" placeholder="ملاحظات الحفر والتمديد، جوال المشترك، تفاصيل المولد أو المطبات..."></textarea>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--sec-border); flex-wrap: wrap; gap: 8px;">
+                    <button type="button" onclick="closeModal('ticketModal')" class="btn-action" style="background: #64748b;">
+                        <i class="fa-solid fa-xmark"></i> إلغاء
+                    </button>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" id="modalDeleteBtn" onclick="deleteCurrentModalTicket()" class="btn-action btn-danger" style="display: none;">
+                            <i class="fa-solid fa-trash"></i> حذف المعاملة
+                        </button>
+                        <button type="submit" class="btn-action" style="background: var(--sec-green); font-size: 13px; padding: 9px 18px;">
+                            <i class="fa-solid fa-floppy-disk"></i> حفظ كافة التعديلات
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: EXACT OFFICIAL CONTRACTOR VIOLATION MINUTE -->
+    <div id="minuteModal" class="modal">
+        <div class="modal-content" style="max-width: 860px;">
+            <div class="modal-header">
+                <div style="font-size: 15px; font-weight: 800; color: var(--sec-navy);">
+                    <i class="fa-solid fa-file-contract text-red"></i> نموذج مخالفة مقاول معتمد (SEC - Saud Consult / PDC)
+                </div>
+                <button onclick="closeModal('minuteModal')" style="background: none; border: none; color: var(--sec-text-muted); font-size: 20px; cursor: pointer;">&times;</button>
+            </div>
+
+            <div class="official-minute-container" id="printableOfficialMinute">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--sec-navy); padding-bottom: 10px; margin-bottom: 8px;">
+                    <div>
+                        <div style="font-size: 11px; font-weight: bold; color: var(--sec-navy);">الشركة السعودية للكهرباء</div>
+                        <div style="font-size: 10px; color: var(--sec-text-muted);">إدارة العمليات والصيانة بجدة</div>
+                    </div>
+                    <div style="font-size: 15px; font-weight: 900; color: var(--sec-navy);">نموذج مخالفة مقاول</div>
+                    <div style="text-align: left;">
+                        <div style="font-size: 11px; font-weight: bold; color: var(--sec-navy);" id="minOfficialNumber">رقم المحضر: 2000007</div>
+                        <div style="font-size: 10px; color: var(--sec-text-muted);">التاريخ: 03/09/2026</div>
+                    </div>
+                </div>
+
+                <div class="sec-banner">بيانات امر العمل</div>
+                <table class="official-table">
+                    <tr>
+                        <td class="label-cell">رقم امر العمل :</td>
+                        <td style="font-weight: 800; color: var(--sec-navy);" id="minWorkOrder">-</td>
+                        <td class="label-cell">الاستشاري :</td>
+                        <td>PDC - Saud Consult</td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">اسم المشروع :</td>
+                        <td>العقد الموحد</td>
+                        <td class="label-cell">المقاول :</td>
+                        <td style="font-weight: 800;" id="minContractorName">-</td>
+                    </tr>
+                </table>
+
+                <div class="sec-banner">وصف المخالفة</div>
+                <table class="official-table">
+                    <tr>
+                        <td colspan="6" style="text-align: right; background: #fff; min-height: 50px; font-size: 12px; line-height: 1.6;" id="minViolationDesc">
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">التاريخ :</td>
+                        <td>03/09/2026</td>
+                        <td class="label-cell">الوقت :</td>
+                        <td>10:30 صباحاً</td>
+                        <td class="label-cell">الموقع :</td>
+                        <td id="minLocationText">-</td>
+                    </tr>
+                </table>
+
+                <table class="official-table" style="margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 35px;">م</th>
+                            <th>بند الغرامة</th>
+                            <th style="width: 60px;">الكمية</th>
+                            <th style="width: 100px;">قيمة الغرامة</th>
+                            <th style="width: 110px;">الاجمالي</th>
+                        </tr>
+                    </thead>
+                    <tbody id="minClausesTbody">
+                        <tr>
+                            <td>1</td>
+                            <td style="text-align: right; font-weight: 700;">غرامة الاعتذار/عدم الاستجابة لتنفيذ أعمال الطوارئ (الفقرة 18-2-1 ج)</td>
+                            <td>1</td>
+                            <td>5,000</td>
+                            <td style="font-weight: 800; color: var(--sec-red);">5,000</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: #f1f5f9; font-weight: 800;">
+                            <td colspan="4" style="text-align: left;">الاجمالي العام للغرامة :</td>
+                            <td style="color: var(--sec-red); font-size: 13px;" id="minGrandTotal">5,000 ر.س</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <table class="official-table">
+                    <tr>
+                        <td class="label-cell" style="vertical-align: top;">افادة الاستشاري :</td>
+                        <td colspan="3" style="text-align: right; font-size: 11.5px;">تم رصد تأخر المقاول في إنجاز أعمال البلاغ الميدانية وتجاوز المهلة النظامية المحددة.</td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell" style="vertical-align: top;">افادة المقاول :</td>
+                        <td colspan="3" style="text-align: right; font-size: 11.5px;">تم التوجيه بالدفع بفرق طوارئ إضافية فوراً لإنهاء المسار.</td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">الاستشاري</td>
+                        <td style="font-size: 11.5px;">الاسم : مهندس الإشراف الميداني (PDC)<br>التوقيع : .........................</td>
+                        <td class="label-cell">المقاول</td>
+                        <td style="font-size: 11.5px;">الاسم : ممثل المقاول بالموقع<br>التوقيع : .........................</td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">محرر المخالفة</td>
+                        <td style="font-size: 11.5px;">الاسم : <strong>ماجد الخيبري</strong><br>التوقيع : .........................</td>
+                        <td class="label-cell">رئيس قسم العمليات</td>
+                        <td style="font-size: 11.5px;">الاسم : <strong>م سامي الحربي</strong><br>التوقيع : .........................</td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">مدير دائرة العمليات والصيانة</td>
+                        <td colspan="3" style="font-size: 11.5px;">الاسم : <strong>م احمد هريدي</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;التوقيع والاعتماد : ....................................</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
+                <button type="button" onclick="sendOfficialMinuteEmail()" class="btn-action" style="background: var(--sec-navy);">
+                    <i class="fa-solid fa-paper-plane"></i> إرسال المحضر للإيميل دايركت ✉️
+                </button>
+                <button type="button" onclick="sendOfficialMinuteWhatsApp()" class="btn-action btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> إرسال عبر واتساب
+                </button>
+                <button type="button" onclick="printOfficialMinute()" class="btn-action" style="background: #475569;">
+                    <i class="fa-solid fa-print"></i> طباعة نموذج المخالفة PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Master Script -->
+    <script>
+        const contractorsMeta = {
+            "مستورة":     { code: "SEC-CON-01", pm: "م. فهد الحربي", email: "operations@mastoora.com.sa", phone: "0554011111", teams_am: 4, teams_pm: 2, backlog: 21, gens: 2, eval: "🟡 أداء بطيء بحاجة لتكثيف الفرق" },
+            "إيجاب":       { code: "SEC-CON-02", pm: "م. وائل الغامدي", email: "contracts@ejab-contracting.com", phone: "0554022222", teams_am: 2, teams_pm: 2, backlog: 13, gens: 1, eval: "🟢 أداء مستقر والتزام عالي بالمسارات" },
+            "الجناحين":   { code: "SEC-CON-04", pm: "م. عبد الله الجناحين", email: "pm.janahain@aljanahain.com.sa", phone: "0554044444", teams_am: 2, teams_pm: 0, backlog: 14, gens: 1, eval: "🟡 16 معاملة (7 تقرير + 9 متبقية)" },
+            "ببكو":       { code: "SEC-CON-06", pm: "م. سامر الشريف", email: "operations@beeko-energy.sa", phone: "0554066666", teams_am: 2, teams_pm: 2, backlog: 6, gens: 1, eval: "🟢 9 معاملات (5 تقرير + 4 متبقية)" },
+            "الجوان":     { code: "SEC-CON-05", pm: "م. طارق الجوان", email: "projects@aljawan.sa", phone: "0554055555", teams_am: 2, teams_pm: 1, backlog: 7, gens: 0, eval: "🟡 9 معاملات (7 تقرير + 2 متبقية)" },
+            "العالمية":   { code: "SEC-CON-03", pm: "م. خالد العالمي", email: "dispatch@alalamiagroup.sa", phone: "0554033333", teams_am: 2, teams_pm: 1, backlog: 6, gens: 0, eval: "🟡 أداء بطيء بحاجة لتكثيف الورديات" },
+            "أبراج الطاقة": { code: "SEC-CON-07", pm: "م. سلطان القحطاني", email: "info@abraj-power.com.sa", phone: "0554077777", teams_am: 0, teams_pm: 2, backlog: 4, gens: 1, eval: "🔴 صفر إنجاز - إلزام فوري بالدفع بفرق" },
+            "لم يتم التوجيه": { code: "PENDING", pm: "إدارة العمليات والصيانة", email: "lv.operations.jed@sec.com.sa", phone: "0120000000", teams_am: 0, teams_pm: 0, backlog: 56, gens: 0, eval: "⚠️ 56 معاملة متبقية بانتظار الإسناد" }
+        };
+
+        const initialDefaultTasks = __TASKS_JSON__;
+
+        let serialRegistry = [
+            { id: 2000001, date: "2026-08-20", contractor: "ببكو", ticket: "45231180", clause: "غرامة الاعتذار/عدم الاستجابة لتنفيذ أعمال الطوارئ", amount: 5000, status: "قيد الإجراء" },
+            { id: 2000002, date: "2026-08-26", contractor: "مستورة", ticket: "46970366", clause: "غرامة عدم التقيد بالمواصفات الإنشائية", amount: 5000, status: "قيد الإجراء" },
+            { id: 2000003, date: "2026-08-28", contractor: "الجناحين", ticket: "46720598", clause: "غرامة السلامة - التصنيف B", amount: 2000, status: "تم الحسم" },
+            { id: 2000004, date: "2026-08-29", contractor: "إيجاب", ticket: "46814946", clause: "غرامة الاعتذار/عدم الاستجابة لتنفيذ أعمال الطوارئ", amount: 5000, status: "قيد الإجراء" },
+            { id: 2000005, date: "2026-08-30", contractor: "أبراج الطاقة", ticket: "45965949", clause: "غرامة السلامة - التصنيف C", amount: 500, status: "تم الحسم" }
+        ];
+
+        let stored = localStorage.getItem('sec_tasks_combined_141_v7');
+        let tickets = stored ? JSON.parse(stored) : initialDefaultTasks;
+        if (!tickets || tickets.length === 0) {
+            tickets = JSON.parse(JSON.stringify(initialDefaultTasks));
+        }
+
+        let activeContractor = "ببكو";
+        let currentOpFilter = "ALL";
+        let currentSearchQuery = "";
+        let currentPreparedTicket = null;
+
+        function showToast(msg) {
+            const box = document.getElementById('toastBox');
+            const msgEl = document.getElementById('toastMsg');
+            if (!box || !msgEl) return;
+            msgEl.innerText = msg;
+            box.style.display = 'flex';
+            setTimeout(() => { box.style.display = 'none'; }, 2800);
+        }
+
+        function saveState() {
+            localStorage.setItem('sec_tasks_combined_141_v7', JSON.stringify(tickets));
+            refreshAll();
+        }
+
+        function resetToDefaults() {
+            if (confirm("هل ترغب باستعادة الـ 141 بلاغاً الأصلية وإعادة ضبط التحديثات؟")) {
+                localStorage.removeItem('sec_tasks_combined_141_v7');
+                tickets = JSON.parse(JSON.stringify(initialDefaultTasks));
+                saveState();
+                showToast("تمت استعادة الـ 141 بلاغاً بنجاح");
+            }
+        }
+
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if (el) el.classList.add('active');
+            refreshAll();
+        }
+
+        function populateDistrictDropdown() {
+            const distSelect = document.getElementById('filterDistrictSelect');
+            if (!distSelect) return;
+            const currentVal = distSelect.value;
+            const districts = Array.from(new Set(tickets.map(t => t.district).filter(Boolean))).sort();
+            distSelect.innerHTML = '<option value="">جميع الأحياء (الكل)</option>';
+            districts.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d;
+                opt.innerText = `حي ${d}`;
+                distSelect.appendChild(opt);
+            });
+            distSelect.value = currentVal;
+        }
+
+        function refreshAll() {
+            populateDistrictDropdown();
+            renderDashboardKPIs();
+            renderOperationsTable();
+            renderContractorSelector();
+            renderContractorHandout();
+            renderDirectorBrief();
+            renderSerialTable();
+            renderDirectoryTable();
+        }
+
+        function getEffectiveStatus(t) {
+            if (t.status === 'تم الإنجاز' || t.done === 1) {
+                return { text: 'تم الإنجاز', badge: 'badge-green', isDone: true, isEscalated: false };
+            }
+            if (t.status === 'جاري العمل' && t.actual_days > 2) {
+                return { text: 'لم يتم التحديث (مصعد) 🚨', badge: 'badge-red', isDone: false, isEscalated: true };
+            }
+            if (t.status === 'لم يتم التحديث (مصعد)' || (t.status && t.status.includes('مصعد'))) {
+                return { text: 'لم يتم التحديث (مصعد) 🚨', badge: 'badge-red', isDone: false, isEscalated: true };
+            }
+            if (t.status === 'تم تسليم المقاول') {
+                return { text: 'تم تسليم المقاول', badge: 'badge-blue', isDone: false, isEscalated: false };
+            }
+            if (t.status === 'ملاحظة') {
+                return { text: 'ملاحظة ⚠️', badge: 'badge-amber', isDone: false, isEscalated: false };
+            }
+            if (t.status === 'لم يتم التوجيه') {
+                return { text: 'لم يتم التوجيه', badge: 'badge-purple', isDone: false, isEscalated: false };
+            }
+            return { text: t.status || 'جاري العمل', badge: 'badge-amber', isDone: false, isEscalated: false };
+        }
+
+        function getTicketBreachStatus(t) {
+            const eff = getEffectiveStatus(t);
+            if (eff.isDone) return { isBreach: false, label: "منجز سليم 🟢", badge: "badge-green", penalty: 0 };
+            if (eff.isEscalated) return { isBreach: true, label: "لم يتم التحديث (> يومين) 🚨", badge: "badge-red", penalty: 1000 };
+            if (t.actual_days > t.sla) {
+                const diff = t.actual_days - t.sla;
+                return { isBreach: true, label: `🚨 مصعد (تأخر ${diff} يوم)`, badge: "badge-red", penalty: diff * 500 };
+            }
+            return { isBreach: false, label: "⏳ جاري ضمن المهلة", badge: "badge-amber", penalty: 0 };
+        }
+
+        function renderDashboardKPIs() {
+            const total = tickets.length;
+            const done = tickets.filter(t => getEffectiveStatus(t).isDone).length;
+            const pending = total - done;
+            const generators = tickets.filter(t => t.feed && t.feed.includes('مولد')).length;
+            const escalated = tickets.filter(t => getEffectiveStatus(t).isEscalated).length;
+            const totalMeters = tickets.reduce((acc, cur) => acc + (parseInt(cur.length) || 0), 0);
+            const donePct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            document.getElementById('dash-total-tickets').innerText = total;
+            document.getElementById('dash-done-tickets').innerText = done;
+            document.getElementById('dash-done-pct').innerText = `نسبة الإنجاز: (${donePct}%)`;
+            document.getElementById('dash-pending-tickets').innerText = pending;
+            document.getElementById('dash-generators-count').innerText = `${generators} مولد`;
+            document.getElementById('dash-total-meters').innerText = `${totalMeters.toLocaleString()} م`;
+            document.getElementById('dash-breach-tickets').innerText = `${escalated} أعطال`;
+            document.getElementById('dash-total-penalties').innerText = `غرامات مستحقة: ${(escalated * 1000).toLocaleString()} ر.س`;
+
+            const tbody = document.getElementById('dash-contractors-tbody');
+            tbody.innerHTML = '';
+            Object.keys(contractorsMeta).forEach(cName => {
+                const cMeta = contractorsMeta[cName];
+                const cTickets = tickets.filter(t => t.contractor === cName);
+                const cDone = cTickets.filter(t => getEffectiveStatus(t).isDone).length;
+                const cPending = cTickets.length - cDone;
+                const cEscalated = cTickets.filter(t => getEffectiveStatus(t).isEscalated).length;
+                const badgeCls = cDone >= 3 ? "badge-green" : (cDone > 0 ? "badge-amber" : "badge-red");
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 800; color: var(--sec-navy);">${cName}</td>
+                    <td>${cMeta.teams_am + cMeta.teams_pm} فرق</td>
+                    <td style="font-weight: 700;">${cTickets.length}</td>
+                    <td style="font-weight: 800; color: var(--sec-green);">${cDone}</td>
+                    <td style="font-weight: 700;">${cPending}</td>
+                    <td style="font-weight: 700; color: ${cEscalated > 0 ? 'var(--sec-red)' : 'var(--sec-text-muted)'};">${cEscalated}</td>
+                    <td style="font-weight: 700; color: ${cEscalated > 0 ? 'var(--sec-red)' : 'var(--sec-text-muted)'};">${(cEscalated * 1000).toLocaleString()} ر.س</td>
+                    <td><a href="mailto:${cMeta.email}" style="color: var(--sec-blue); text-decoration: underline;">${cMeta.email}</a></td>
+                    <td><span class="badge-status ${badgeCls}">${cMeta.eval}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function handleSmartSearch(query) {
+            currentSearchQuery = query.trim();
+            const clearBtn = document.getElementById('clearSearchBtn');
+            if (clearBtn) clearBtn.style.display = currentSearchQuery ? 'block' : 'none';
+            renderOperationsTable();
+        }
+
+        function handleDropdownFilter() {
+            renderOperationsTable();
+        }
+
+        function clearSmartSearch() {
+            const inp = document.getElementById('smartSearchInput');
+            if (inp) inp.value = '';
+            currentSearchQuery = '';
+            document.querySelectorAll('.search-chip').forEach(c => c.classList.remove('active'));
+            const cSel = document.getElementById('filterContractorSelect');
+            const fSel = document.getElementById('filterFeedSelect');
+            const dSel = document.getElementById('filterDistrictSelect');
+            if (cSel) cSel.value = '';
+            if (fSel) fSel.value = '';
+            if (dSel) dSel.value = '';
+            handleSmartSearch('');
+        }
+
+        function applyQuickChip(chipText) {
+            const inp = document.getElementById('smartSearchInput');
+            if (inp) inp.value = chipText;
+            document.querySelectorAll('.search-chip').forEach(c => {
+                if (c.innerText.includes(chipText)) c.classList.add('active');
+                else c.classList.remove('active');
+            });
+            handleSmartSearch(chipText);
+            switchTab('tab-operations');
+        }
+
+        function filterTicketsList(list) {
+            let result = [...list];
+
+            if (currentOpFilter === 'DONE') {
+                result = result.filter(t => getEffectiveStatus(t).isDone);
+            } else if (currentOpFilter === 'PENDING') {
+                result = result.filter(t => !getEffectiveStatus(t).isDone);
+            } else if (currentOpFilter === 'ESCALATED') {
+                result = result.filter(t => getEffectiveStatus(t).isEscalated);
+            }
+
+            const cSel = document.getElementById('filterContractorSelect');
+            const fSel = document.getElementById('filterFeedSelect');
+            const dSel = document.getElementById('filterDistrictSelect');
+
+            if (cSel && cSel.value) {
+                result = result.filter(t => t.contractor === cSel.value);
+            }
+            if (fSel && fSel.value) {
+                result = result.filter(t => t.feed && t.feed.includes(fSel.value));
+            }
+            if (dSel && dSel.value) {
+                result = result.filter(t => t.district === dSel.value);
+            }
+
+            if (currentSearchQuery) {
+                const q = currentSearchQuery.toLowerCase();
+
+                if (q.includes('متبقي') || q.includes('متبقية') || q.includes('معاملات المتبقية')) {
+                    result = result.filter(t => t.source === 'معاملات_متبقية');
+                } else if (q.includes('تقرير عام') || q.includes('التقرير العام')) {
+                    result = result.filter(t => t.source === 'التقرير_العام');
+                } else if (q.includes('لم يتم التوجيه') || q.includes('غير مسند') || q.includes('بدون مقاول')) {
+                    result = result.filter(t => t.contractor === 'لم يتم التوجيه' || t.status === 'لم يتم التوجيه');
+                } else if (q.includes('اقصر') || q.includes('أقصر') || q.includes('اصغر') || q.includes('أصغر') || q.includes('قصير') || q.includes('short')) {
+                    result = result.filter(t => t.length > 0).sort((a, b) => a.length - b.length);
+                } else if (q.includes('اطول') || q.includes('أطول') || q.includes('اكبر') || q.includes('أكبر') || q.includes('طويل') || q.includes('مربعات') || q.includes('مربع') || q.includes('long')) {
+                    result = result.filter(t => t.length > 0).sort((a, b) => b.length - a.length);
+                } else if (q.includes('لم يتم التحديث') || q.includes('تحديث') || q.includes('مصعد') || q.includes('يومين')) {
+                    result = result.filter(t => getEffectiveStatus(t).isEscalated);
+                } else if (q.includes('مولد') || q.includes('مولدات')) {
+                    result = result.filter(t => t.feed && t.feed.includes('مولد'));
+                } else {
+                    result = result.filter(t => {
+                        return (t.id && t.id.toLowerCase().includes(q)) ||
+                               (t.contractor && t.contractor.toLowerCase().includes(q)) ||
+                               (t.district && t.district.toLowerCase().includes(q)) ||
+                               (t.substation && t.substation.toLowerCase().includes(q)) ||
+                               (t.type && t.type.toLowerCase().includes(q)) ||
+                               (t.from_to && t.from_to.toLowerCase().includes(q)) ||
+                               (t.status && t.status.toLowerCase().includes(q)) ||
+                               (t.feed && t.feed.toLowerCase().includes(q)) ||
+                               (t.note && t.note.toLowerCase().includes(q)) ||
+                               (t.length && String(t.length).includes(q));
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        function renderOperationsTable() {
+            const tbody = document.getElementById('operationsTbody');
+            tbody.innerHTML = '';
+
+            const filtered = filterTicketsList(tickets);
+            const countEl = document.getElementById('op-count-all');
+            if (countEl) countEl.innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="13" style="padding: 24px; color: var(--sec-text-muted); font-size: 13px;">لا توجد نتائج مطابقة لمعايير البحث</td></tr>`;
+                return;
+            }
+
+            filtered.forEach((t, i) => {
+                const originalIndex = tickets.indexOf(t);
+                const effStatus = getEffectiveStatus(t);
+                const mapQuery = encodeURIComponent(`محطة ${t.substation} حي ${t.district} جدة`);
+                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+                const feedBadge = t.feed && t.feed.includes('مولد') ? 'badge-purple' : 'badge-blue';
+                const sourceBadge = t.source === 'معاملات_متبقية' ? 'badge-green' : 'badge-blue';
+                const sourceText = t.source === 'معاملات_متبقية' ? 'متبقية 📑' : 'تقرير عام 📊';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${i+1}</td>
+                    <td style="font-weight: 800; color: var(--sec-navy);">${t.contractor}</td>
+                    <td style="font-weight: 800; color: var(--sec-blue);">${t.id}</td>
+                    <td>حي ${t.district}<br><small style="color: var(--sec-text-muted);">محطة ${t.substation}</small></td>
+                    <td>
+                        <a href="${mapUrl}" target="_blank" class="btn-map" title="فتح الموقع في خرائط Google">
+                            <i class="fa-solid fa-map-location-dot"></i> خريطة
+                        </a>
+                    </td>
+                    <td><span class="badge-status ${feedBadge}">${t.feed || 'كابل مؤقت'}</span></td>
+                    <td>${t.type}</td>
+                    <td style="font-weight: 800;">${t.length > 0 ? t.length + 'م' : '-'}</td>
+                    <td>${t.sla} يوم</td>
+                    <td style="font-size: 11px; color: var(--sec-text-muted); max-width: 140px; word-break: break-all;">${t.from_to}</td>
+                    <td><span class="badge-status ${effStatus.badge}">${effStatus.text}</span></td>
+                    <td><span class="badge-status ${sourceBadge}">${sourceText}</span></td>
+                    <td>
+                        <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-action btn-sm btn-purple" onclick="openOfficialMinuteModal(${originalIndex})" title="محضر رسمي">
+                                <i class="fa-solid fa-file-contract"></i> محضر
+                            </button>
+                            <button class="btn-action btn-sm" onclick="sendSingleTicketEmail(${originalIndex})" title="إرسال إيميل">
+                                <i class="fa-solid fa-envelope"></i>
+                            </button>
+                            <button class="btn-action btn-sm" onclick="editTicket(${originalIndex})" title="تعديل"><i class="fa-solid fa-pen"></i></button>
+                            ${!effStatus.isDone ? `<button class="btn-action btn-whatsapp btn-sm" onclick="toggleDoneTicket(${originalIndex})" title="إطلاق التيار"><i class="fa-solid fa-check"></i></button>` : ''}
+                            <button class="btn-action btn-danger btn-sm" onclick="deleteTicket(${originalIndex})" title="حذف"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterOperationsTable(filter, el) {
+            currentOpFilter = filter;
+            document.querySelectorAll('#tab-operations .search-chip').forEach(b => b.classList.remove('active'));
+            if (el) el.classList.add('active');
+            renderOperationsTable();
+        }
+
+        function renderDirectorBrief() {
+            const total = tickets.length;
+            const done = tickets.filter(t => getEffectiveStatus(t).isDone).length;
+            const pending = total - done;
+            const tempFeed = tickets.filter(t => t.feed && t.feed.includes('مؤقت')).length;
+            const escalated = tickets.filter(t => getEffectiveStatus(t).isEscalated).length;
+            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            document.getElementById('briefTotal').innerText = total;
+            document.getElementById('briefDone').innerText = done;
+            document.getElementById('briefPending').innerText = pending;
+            document.getElementById('briefTemp').innerText = tempFeed;
+            document.getElementById('briefBreach').innerText = escalated;
+            document.getElementById('briefPct').innerText = `${pct}%`;
+
+            const cTbody = document.getElementById('briefContractorsTbody');
+            cTbody.innerHTML = '';
+            Object.keys(contractorsMeta).forEach(cName => {
+                const cMeta = contractorsMeta[cName];
+                const list = tickets.filter(t => t.contractor === cName);
+                const cDone = list.filter(t => getEffectiveStatus(t).isDone).length;
+                const cPending = list.length - cDone;
+                const cPct = list.length > 0 ? Math.round((cDone / list.length) * 100) : 0;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 800; color: var(--sec-navy);">${cName}</td>
+                    <td>${cMeta.teams_am + cMeta.teams_pm} فرق</td>
+                    <td style="font-weight: 700;">${list.length}</td>
+                    <td style="font-weight: 800; color: var(--sec-green);">${cDone}</td>
+                    <td style="font-weight: 700;">${cPending}</td>
+                    <td style="font-weight: 800;">${cPct}%</td>
+                    <td style="text-align: right; font-size: 11.5px;">${cMeta.eval}</td>
+                `;
+                cTbody.appendChild(tr);
+            });
+
+            const critTbody = document.getElementById('briefCriticalTbody');
+            critTbody.innerHTML = '';
+            const critical = tickets.filter(t => t.length >= 100).sort((a,b) => b.length - a.length);
+            critical.forEach(t => {
+                const eff = getEffectiveStatus(t);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 800; color: var(--sec-blue);">${t.id}</td>
+                    <td style="font-weight: 700;">${t.contractor}</td>
+                    <td>حي ${t.district}</td>
+                    <td>محطة ${t.substation}</td>
+                    <td style="font-weight: 900; color: var(--sec-red);">${t.length} متر</td>
+                    <td>${t.sla} أيام</td>
+                    <td><span class="badge-status ${eff.badge}">${eff.text}</span></td>
+                `;
+                critTbody.appendChild(tr);
+            });
+        }
+
+        function printDirectorBrief() {
+            const printContent = document.getElementById('printableDirectorArea').innerHTML;
+            const win = window.open('', '', 'height=800,width=1000');
+            win.document.write('<html lang="ar" dir="rtl"><head><title>تقرير مدير الإدارة التنفيذي</title>');
+            win.document.write('<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">');
+            win.document.write('<style>body{font-family:Tajawal,sans-serif;padding:25px;color:#0f172a;background:#fff;}' +
+                               '.director-brief{border:2px solid #002060;padding:20px;border-radius:8px;}' +
+                               '.director-header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #002060;padding-bottom:12px;margin-bottom:15px;}' +
+                               '.director-section-title{font-size:13px;font-weight:900;color:#002060;margin:14px 0 8px 0;border-right:4px solid #0284c7;padding-right:6px;}' +
+                               '.official-table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:10pt;text-align:center;}' +
+                               '.official-table th{background:#002060;color:#fff;border:1px solid #999;padding:6px;}' +
+                               '.official-table td{border:1px solid #999;padding:6px;}' +
+                               '.badge-status{border:1px solid #000;padding:2px 6px;border-radius:10px;font-size:9pt;}</style>');
+            win.document.write('</head><body>');
+            win.document.write(printContent);
+            win.document.write('</body></html>');
+            win.document.close();
+            win.focus();
+            setTimeout(() => { win.print(); win.close(); }, 400);
+        }
+
+        function renderContractorSelector() {
+            const grid = document.getElementById('contractorSelectorGrid');
+            grid.innerHTML = '';
+            Object.keys(contractorsMeta).forEach(cName => {
+                const cMeta = contractorsMeta[cName];
+                const cTickets = tickets.filter(t => t.contractor === cName);
+                const cDone = cTickets.filter(t => getEffectiveStatus(t).isDone).length;
+                const cPending = cTickets.length - cDone;
+
+                const card = document.createElement('div');
+                card.className = `contractor-card ${cName === activeContractor ? 'active' : ''}`;
+                card.onclick = () => { activeContractor = cName; renderContractorSelector(); renderContractorHandout(); };
+                card.innerHTML = `
+                    <div class="contractor-head">
+                        <span class="contractor-name">${cName}</span>
+                        <span class="badge-status ${cDone > 0 ? 'badge-green' : 'badge-amber'}">${cDone} منجز</span>
+                    </div>
+                    <div style="font-size: 11px; color: var(--sec-text-muted);">
+                        ${cMeta.teams_am + cMeta.teams_pm} فرق | المسند: ${cTickets.length} | المتبقي: ${cPending}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderContractorHandout() {
+            const meta = contractorsMeta[activeContractor];
+            const list = tickets.filter(t => t.contractor === activeContractor);
+            const doneCount = list.filter(t => getEffectiveStatus(t).isDone).length;
+
+            document.getElementById('activeContractorName').innerText = `جدول التكليف الميداني لمقاول (${activeContractor})`;
+            document.getElementById('activeContractorMeta').innerText = `كود: ${meta.code} | الفرق: ${meta.teams_am + meta.teams_pm} فرق | المسند: ${list.length} | المنجز: ${doneCount} | المتبقي: ${list.length - doneCount} | الإيميل: ${meta.email}`;
+
+            const tbody = document.getElementById('contractorHandoutTbody');
+            tbody.innerHTML = '';
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="11" style="padding: 20px; color: var(--sec-text-muted);">لا توجد بلاغات مسندة لهذا المقاول حالياً</td></tr>`;
+                return;
+            }
+
+            list.forEach(t => {
+                const originalIndex = tickets.indexOf(t);
+                const effStatus = getEffectiveStatus(t);
+                const status = getTicketBreachStatus(t);
+                const mapQuery = encodeURIComponent(`محطة ${t.substation} حي ${t.district} جدة`);
+                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 800; color: var(--sec-blue);">${t.id}</td>
+                    <td>${t.district}</td>
+                    <td>${t.substation}</td>
+                    <td><a href="${mapUrl}" target="_blank" class="btn-map"><i class="fa-solid fa-map-location-dot"></i> خريطة</a></td>
+                    <td>${t.type}</td>
+                    <td style="font-weight: 800;">${t.length > 0 ? t.length + 'م' : '-'}</td>
+                    <td>${t.sla} يوم</td>
+                    <td style="font-size: 11px; color: var(--sec-text-muted);">${t.from_to}</td>
+                    <td><span class="badge-status ${effStatus.badge}">${effStatus.text}</span></td>
+                    <td><span class="badge-status ${status.badge}">${status.label}</span></td>
+                    <td>
+                        <div style="display: flex; gap: 4px; justify-content: center;">
+                            <button class="btn-action btn-sm" onclick="editTicket(${originalIndex})" title="تعديل كافة البيانات">
+                                <i class="fa-solid fa-pen"></i> تعديل
+                            </button>
+                            <button class="btn-action btn-sm btn-purple" onclick="openOfficialMinuteModal(${originalIndex})">
+                                <i class="fa-solid fa-file-contract"></i> محضر
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function sendContractorDirectEmail() {
+            const list = tickets.filter(t => t.contractor === activeContractor);
+            if (list.length === 0) return alert('لا توجد بلاغات مسندة');
+            const meta = contractorsMeta[activeContractor];
+
+            const subject = `جدول تكليف الأعمال الميدانية - شركة (${activeContractor}) - كهرباء جدة`;
+            let body = `سعادة مدير مشروع شركة (${activeContractor}) المحترم،\n\n`;
+            body += `إليكم جدول التكليف الميداني المعتمد لبلاغات شبكات الجهد المنخفض لليوم:\n\n`;
+
+            list.forEach((t, i) => {
+                body += `${i+1}. أمر عمل (${t.id}) - حي ${t.district} (محطة ${t.substation})\n`;
+                body += `   • الطول: ${t.length}م (${t.type}) | المهلة: ${t.sla} يوم | المسار: ${t.from_to}\n`;
+                body += `   • الحالة: ${t.status}\n\n`;
+            });
+
+            body += `نأمل توجيه الفرق الميدانية والالتزام بالمهل المحددة وإفادتنا فور إطلاق التيار.\n\nقسم شبكات الجهد المنخفض - إدارة العمليات والصيانة بجدة`;
+            window.location.href = `mailto:${meta.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+        function sendSingleTicketEmail(index) {
+            const t = tickets[index];
+            const meta = contractorsMeta[t.contractor] || { email: "operations@sec.com.sa" };
+            const subject = `إشعار متابعة عاجل - أمر عمل رقم (${t.id}) - حي ${t.district}`;
+            let body = `سعادة مدير مشروع مقاول (${t.contractor}) المحترم،\n\n`;
+            body += `نحيطكم بموقف أمر العمل رقم (${t.id}) بحي (${t.district}) بطول (${t.length}م).\n`;
+            body += `المسار: ${t.from_to} | المهلة: ${t.sla} يوم | الحالة: ${t.status}\n\n`;
+            body += `نأمل سرعة اتخاذ الإجراء الميداني الفوري لإنهاء العطل وإطلاق التيار.`;
+            window.location.href = `mailto:${meta.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+        function sendContractorWhatsAppTable() {
+            const list = tickets.filter(t => t.contractor === activeContractor);
+            if (list.length === 0) return alert('لا توجد بلاغات مسندة');
+
+            let msg = `⚡ *الشركة السعودية للكهرباء - قسم شبكات الجهد المنخفض بجدة*\n`;
+            msg += `📋 *جدول التكليف اليومي لمقاول (${activeContractor})*\n`;
+            msg += `إجمالي الأعطال: ${list.length}\n\n`;
+            list.forEach((t, i) => {
+                msg += `*${i+1}. بلاغ (${t.id})* | حي ${t.district} (محطة ${t.substation})\n`;
+                msg += `• الطول: ${t.length}م (${t.type}) | المهلة: ${t.sla} يوم\n`;
+                msg += `• المسار: ${t.from_to}\n`;
+                msg += `• الحالة: ${t.status}\n\n`;
+            });
+            msg += `⚠️ نأمل سرعة إنجاز المهام وإطلاق التيار.`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function sendContractorPenaltyNotice() {
+            const list = tickets.filter(t => t.contractor === activeContractor && !getEffectiveStatus(t).isDone);
+            let msg = `🚨 *إشعار متابعة عاجل - كهرباء جدة*\n`;
+            msg += `إلى: مدير مشروع مقاول (${activeContractor}) المحترم\n`;
+            msg += `نحيطكم بوجود (${list.length}) بلاغات قيد التنفيذ بالموقع.\nنلزمكم بالدفع الفوري بفرق إضافية لإنهاء الأعمال اليوم.`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function openOfficialMinuteModal(ticketIndex) {
+            const t = tickets[ticketIndex];
+            currentPreparedTicket = t;
+            const meta = contractorsMeta[t.contractor] || { code: "SEC-CON-00", pm: "مدير المشروع", email: "info@sec.com.sa" };
+
+            document.getElementById('minWorkOrder').innerText = t.id;
+            document.getElementById('minContractorName').innerText = `شركة ${t.contractor} للمقاولات (${meta.code})`;
+            document.getElementById('minLocationText').innerText = `حي ${t.district} (المحطة: ${t.substation})`;
+            document.getElementById('minViolationDesc').innerText = `تأخر المقاول في إنجاز أعمال البلاغ الميدانية بطول (${t.length}م) وتجاوز المهلة النظامية المحددة (${t.sla} يوم) - المسار: ${t.from_to} (${t.note || ''})`;
+
+            document.getElementById('minuteModal').classList.add('show');
+        }
+
+        function sendOfficialMinuteEmail() {
+            if (!currentPreparedTicket) return;
+            const t = currentPreparedTicket;
+            const meta = contractorsMeta[t.contractor] || { email: "info@sec.com.sa" };
+
+            const subject = `[محضر مخالفة مقاول رسمي] أمر عمل رقم (${t.id}) - شركة (${t.contractor})`;
+            let body = `سعادة مدير مشروع شركة (${t.contractor}) المحترم،\n\n`;
+            body += `إشعار بصدور نموذج مخالفة مقاول معتمد (SEC - Saud Consult / PDC) بخصوص أمر العمل رقم (${t.id}) بحي (${t.district}):\n`;
+            body += `• طول الكابل: ${t.length}م (${t.type}) | المهلة: ${t.sla} يوم\n`;
+            body += `• المسار: ${t.from_to}\n`;
+            body += `• الغرامة المطبقة: 5,000 ريال سعودي (الفقرة 18-2-1 ج)\n`;
+            body += `• محرر المخالفة: ماجد الخيبري | رئيس قسم العمليات: م سامي الحربي\n\n`;
+            body += `نلزمكم بالدفع الفوري بفرق طوارئ لإطلاق التيار اليوم.\nقسم شبكات الجهد المنخفض بجدة`;
+            window.location.href = `mailto:${meta.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+        function sendOfficialMinuteWhatsApp() {
+            if (!currentPreparedTicket) return;
+            const t = currentPreparedTicket;
+            let msg = `🚨 *نموذج مخالفة مقاول رسمي - كهرباء جدة / PDC*\n\n`;
+            msg += `إلى: مدير مشروع شركة (${t.contractor}) المحترم\n`;
+            msg += `بخصوص أمر العمل رقم: (${t.id}) - حي ${t.district}\n`;
+            msg += `• المخالفة: تجاوز المهلة المحددة لكابل بطول ${t.length}م\n`;
+            msg += `• المسار: ${t.from_to}\n`;
+            msg += `• الغرامة المعتمدة: *5,000 ريال سعودي* (الفقرة 18-2-1 ج)\n`;
+            msg += `• محرر المخالفة: ماجد الخيبري\n\n`;
+            msg += `نأمل اتخاذ الإجراء الفوري بالدفع بفرق طوارئ لإطلاق التيار اليوم.`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function printOfficialMinute() {
+            const printContent = document.getElementById('printableOfficialMinute').innerHTML;
+            const win = window.open('', '', 'height=750,width=950');
+            win.document.write('<html lang="ar" dir="rtl"><head><title>نموذج مخالفة مقاول</title>');
+            win.document.write('<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">');
+            win.document.write('<style>body{font-family:Tajawal,sans-serif;padding:20px;color:#000;background:#fff;}' +
+                               '.official-minute-container{border:2px solid #002060;padding:20px;border-radius:6px;}' +
+                               '.sec-banner{background:#d9e2ec;color:#002060;text-align:center;font-weight:bold;padding:5px;margin:10px 0;border:1px solid #cbd5e1;}' +
+                               '.official-table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:10pt;}' +
+                               '.official-table th, .official-table td{border:1px solid #999;padding:6px 8px;text-align:center;}' +
+                               '.official-table th{background:#002060;color:#fff;}' +
+                               '.official-table .label-cell{background:#f1f5f9;font-weight:bold;width:140px;text-align:right;}</style>');
+            win.document.write('</head><body>');
+            win.document.write(printContent);
+            win.document.write('</body></html>');
+            win.document.close();
+            win.focus();
+            setTimeout(() => { win.print(); win.close(); }, 400);
+        }
+
+        function renderSerialTable() {
+            const tbody = document.getElementById('serialTbody');
+            tbody.innerHTML = '';
+            serialRegistry.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 800; color: var(--sec-blue);">${s.id}</td>
+                    <td>${s.date}</td>
+                    <td style="font-weight: 700;">${s.contractor}</td>
+                    <td>${s.ticket}</td>
+                    <td style="text-align: right;">${s.clause}</td>
+                    <td style="font-weight: 800; color: var(--sec-red);">${s.amount.toLocaleString()} ر.س</td>
+                    <td><span class="badge-status ${s.status.includes('جديد') ? 'badge-red' : 'badge-green'}">${s.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderDirectoryTable() {
+            const tbody = document.getElementById('directoryTbody');
+            tbody.innerHTML = '';
+            Object.keys(contractorsMeta).forEach(cName => {
+                const c = contractorsMeta[cName];
+                const list = tickets.filter(t => t.contractor === cName);
+                const doneCount = list.filter(t => getEffectiveStatus(t).isDone).length;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 800; color: var(--sec-navy);">${cName}</td>
+                    <td>${c.code}</td>
+                    <td>${c.pm}</td>
+                    <td><a href="mailto:${c.email}" style="color: var(--sec-blue); text-decoration: underline;">${c.email}</a></td>
+                    <td>${c.phone}</td>
+                    <td>${c.teams_am + c.teams_pm} فرق</td>
+                    <td>${list.length - doneCount}</td>
+                    <td>
+                        <a href="mailto:${c.email}" class="btn-action btn-sm" style="text-decoration: none;">
+                            <i class="fa-solid fa-envelope"></i> إيميل
+                        </a>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openNewTicketModal() {
+            document.getElementById('editTicketIndex').value = "-1";
+            document.getElementById('modalTicketTitle').innerHTML = `<i class="fa-solid fa-plus-circle text-blue"></i> إضافة وإسناد معاملة جديدة`;
+            document.getElementById('ticketForm').reset();
+            document.getElementById('modalDeleteBtn').style.display = 'none';
+            document.getElementById('modalAssignDate').value = new Date().toISOString().slice(0, 10);
+            document.getElementById('modalCableSize').value = "300";
+            document.getElementById('modalFeed').value = "كابل مؤقت";
+            document.getElementById('modalSource').value = "إدخال_ميداني_مباشر";
+            document.getElementById('modalCompliance').value = "⏳ جاري ضمن المهلة";
+            calculateAutoSLA();
+            document.getElementById('ticketModal').classList.add('show');
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        function calculateAutoSLA() {
+            const len = parseInt(document.getElementById('modalLength').value) || 0;
+            const cls = document.getElementById('modalClassification');
+            const sla = document.getElementById('modalSLA');
+            if (len <= 50) { 
+                cls.value = "احلال"; 
+                sla.value = 1; 
+            } else if (len <= 80) { 
+                cls.value = "احلال"; 
+                sla.value = 2; 
+            } else { 
+                cls.value = "مربع"; 
+                sla.value = 3; 
+            }
+        }
+
+        function handleModalStatusChange() {
+            const st = document.getElementById('modalStatus').value;
+            const doneDateInp = document.getElementById('modalDoneDate');
+            const compSelect = document.getElementById('modalCompliance');
+            if (st === 'تم الإنجاز') {
+                if (!doneDateInp.value) doneDateInp.value = new Date().toISOString().slice(0, 10);
+                compSelect.value = "منجز ضمن المهلة ✅";
+            } else if (st === 'لم يتم التوجيه') {
+                compSelect.value = "لم يتم التوجيه";
+            } else if (st.includes('مصعد')) {
+                compSelect.value = "🚨 مصعد للمساءلة";
+            } else {
+                compSelect.value = "⏳ جاري ضمن المهلة";
+            }
+        }
+
+        function editTicket(index) {
+            const t = tickets[index];
+            document.getElementById('editTicketIndex').value = index;
+            document.getElementById('modalTicketTitle').innerHTML = `<i class="fa-solid fa-pen-to-square text-blue"></i> تعديل كافة بيانات المعاملة (${t.id})`;
+            
+            document.getElementById('modalTicket').value = t.id || '';
+            document.getElementById('modalContractor').value = t.contractor || 'لم يتم التوجيه';
+            document.getElementById('modalDistrict').value = t.district || '';
+            document.getElementById('modalSubstation').value = t.substation || '';
+            document.getElementById('modalSource').value = t.source || 'معاملات_متبقية';
+            
+            document.getElementById('modalLength').value = t.length !== undefined ? t.length : 0;
+            document.getElementById('modalCableSize').value = t.cable_size || '300';
+            document.getElementById('modalClassification').value = t.type || 'احلال';
+            document.getElementById('modalFeed').value = t.feed || 'كابل مؤقت';
+            document.getElementById('modalFromTo').value = t.from_to || '';
+
+            document.getElementById('modalStatus').value = t.status || 'جاري العمل';
+            document.getElementById('modalSLA').value = t.sla || 2;
+            document.getElementById('modalAssignDate').value = t.assign_date || '2026-08-30';
+            document.getElementById('modalDoneDate').value = t.done_date || '';
+            document.getElementById('modalDays').value = t.actual_days !== undefined ? t.actual_days : 1;
+            document.getElementById('modalCompliance').value = t.compliance || '⏳ جاري ضمن المهلة';
+
+            document.getElementById('modalNote').value = t.note || '';
+
+            document.getElementById('modalDeleteBtn').style.display = 'inline-flex';
+            document.getElementById('ticketModal').classList.add('show');
+        }
+
+        function saveTicket(e) {
+            e.preventDefault();
+            const editIdx = parseInt(document.getElementById('editTicketIndex').value);
+            const len = parseInt(document.getElementById('modalLength').value) || 0;
+            const slaVal = parseInt(document.getElementById('modalSLA').value) || (len <= 50 ? 1 : (len <= 80 ? 2 : 3));
+            const st = document.getElementById('modalStatus').value;
+            const doneDt = document.getElementById('modalDoneDate').value.trim();
+            const isDone = st === 'تم الإنجاز' || doneDt !== "";
+
+            const ticketData = {
+                contractor: document.getElementById('modalContractor').value,
+                id: document.getElementById('modalTicket').value.trim(),
+                district: document.getElementById('modalDistrict').value.trim(),
+                substation: document.getElementById('modalSubstation').value.trim(),
+                feed: document.getElementById('modalFeed').value,
+                from_to: document.getElementById('modalFromTo').value.trim(),
+                cable_size: document.getElementById('modalCableSize').value.trim(),
+                type: document.getElementById('modalClassification').value,
+                length: len,
+                sla: slaVal,
+                assign_date: document.getElementById('modalAssignDate').value,
+                done_date: doneDt,
+                actual_days: parseInt(document.getElementById('modalDays').value) || 1,
+                status: st,
+                done: isDone ? 1 : 0,
+                compliance: document.getElementById('modalCompliance').value,
+                note: document.getElementById('modalNote').value.trim(),
+                source: document.getElementById('modalSource').value
+            };
+
+            if (editIdx >= 0) {
+                tickets[editIdx] = ticketData;
+            } else {
+                tickets.unshift(ticketData);
+            }
+
+            closeModal('ticketModal');
+            saveState();
+            showToast(`تم حفظ المعاملة (${ticketData.id}) بنجاح`);
+        }
+
+        function deleteCurrentModalTicket() {
+            const editIdx = parseInt(document.getElementById('editTicketIndex').value);
+            if (editIdx >= 0) {
+                deleteTicket(editIdx);
+                closeModal('ticketModal');
+            }
+        }
+
+        function toggleDoneTicket(index) {
+            tickets[index].done = 1;
+            tickets[index].status = "تم الإنجاز";
+            tickets[index].done_date = new Date().toISOString().slice(0, 10);
+            tickets[index].compliance = "منجز ضمن المهلة ✅";
+            saveState();
+            showToast(`تم إطلاق التيار للبلاغ (${tickets[index].id})`);
+        }
+
+        // Clean, error-free deleteTicket implementation
+        function deleteTicket(index) {
+            if (confirm(`هل أنت متأكد من حذف المعاملة رقم (${tickets[index].id})؟`)) {
+                const deletedId = tickets[index].id;
+                tickets.splice(index, 1);
+                saveState();
+                showToast(`تم حذف المعاملة (${deletedId})`);
+            }
+        }
+
+        function exportJsonBackup() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(tickets, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `SEC_Tasks_Backup_${new Date().toISOString().slice(0,10)}.json`);
+            dlAnchor.click();
+            showToast("تم تنزيل النسخة الاحتياطية JSON");
+        }
+
+        function importJsonBackup(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const parsed = JSON.parse(evt.target.result);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        tickets = parsed;
+                        saveState();
+                        showToast(`تمت استعادة (${parsed.length}) بلاغ بنجاح`);
+                    } else {
+                        alert("الملف لا يحتوي على سجلات صالحة");
+                    }
+                } catch(err) {
+                    alert("خطأ في قراءة ملف النسخة الاحتياطية: " + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function exportToExcelFile() {
+            const dataToExport = tickets.map((t, idx) => {
+                const eff = getEffectiveStatus(t);
+                const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('محطة ' + t.substation + ' حي ' + t.district + ' جدة')}`;
+                return {
+                    "م": idx + 1,
+                    "المقاول المنفذ": t.contractor,
+                    "رقم المهمة": t.id,
+                    "الحي": t.district,
+                    "رقم المحطة": t.substation,
+                    "نوع التغذية": t.feed,
+                    "نوع العمل": t.type,
+                    "طول الكابل (متر)": t.length,
+                    "المهلة المحددة (SLA)": t.sla + " يوم",
+                    "المسار الميداني": t.from_to,
+                    "حالة التنفيذ": eff.text,
+                    "أيام العمل": t.actual_days || 1,
+                    "مؤشر الالتزام": t.compliance,
+                    "موقع الخريطة": mapLink,
+                    "الملاحظات والإفادة": t.note
+                };
+            });
+
+            const ws = XLSX.utils.json_to_sheet(dataToExport);
+            ws['!cols'] = [
+                {wch: 4}, {wch: 16}, {wch: 14}, {wch: 14}, {wch: 12},
+                {wch: 12}, {wch: 12}, {wch: 14}, {wch: 14}, {wch: 24},
+                {wch: 22}, {wch: 10}, {wch: 18}, {wch: 35}, {wch: 35}
+            ];
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "سجل_أعطال_الجهد_المنخفض");
+            XLSX.writeFile(wb, `SEC_LV_Operations_141_Tasks_${new Date().toISOString().slice(0,10)}.xlsx`);
+            showToast("تم تصدير ملف Excel بنجاح");
+        }
+
+        function importExcelFile(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const data = new Uint8Array(evt.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheetName = workbook.SheetNames.find(s => s.includes('أعطال') || s.includes('سجل')) || workbook.SheetNames[0];
+                    const sheet = workbook.Sheets[sheetName];
+                    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+                    let importedTasks = [];
+                    let headerRowIdx = rows.findIndex(r => r.some(c => String(c).includes('المهمة') || String(c).includes('البلاغ')));
+                    if (headerRowIdx === -1) headerRowIdx = 4;
+
+                    const hdrs = rows[headerRowIdx].map(c => String(c).trim());
+                    const taskCol = hdrs.findIndex(c => c.includes('المهمة') || c.includes('البلاغ'));
+                    const conCol = hdrs.findIndex(c => c.includes('المقاول'));
+                    const distCol = hdrs.findIndex(c => c.includes('الحي'));
+                    const subCol = hdrs.findIndex(c => c.includes('المحطة'));
+                    const lenCol = hdrs.findIndex(c => c.includes('الطول'));
+                    const typeCol = hdrs.findIndex(c => c.includes('نوع العمل'));
+                    const statusCol = hdrs.findIndex(c => c.includes('حالة'));
+
+                    for (let r = headerRowIdx + 1; r < rows.length; r++) {
+                        const row = rows[r];
+                        if (!row || !row[taskCol]) continue;
+                        const len = parseInt(row[lenCol]) || 0;
+                        const isDone = String(row[statusCol]).includes('إنجاز');
+                        importedTasks.push({
+                            contractor: String(row[conCol] || 'غير محدد').trim(),
+                            id: String(row[taskCol]).trim(),
+                            district: String(row[distCol] || '-').trim(),
+                            substation: String(row[subCol] || '-').trim(),
+                            feed: "كابل مؤقت",
+                            from_to: "-",
+                            cable_size: "-",
+                            type: String(row[typeCol] || (len <= 80 ? 'احلال' : 'مربع')).trim(),
+                            length: len,
+                            sla: len <= 50 ? 1 : (len <= 80 ? 2 : 3),
+                            assign_date: "2026-08-31",
+                            done_date: isDone ? "2026-08-31" : "",
+                            actual_days: 1,
+                            status: isDone ? "تم الإنجاز" : "جاري العمل",
+                            done: isDone ? 1 : 0,
+                            compliance: isDone ? "منجز ضمن المهلة ✅" : "⏳ جاري ضمن المهلة",
+                            note: "مستورد من ملف Excel"
+                        });
+                    }
+
+                    if (importedTasks.length > 0) {
+                        tickets = importedTasks;
+                        saveState();
+                        showToast(`تم استيراد (${importedTasks.length}) بلاغ بنجاح`);
+                    } else {
+                        alert("لم يتم العثور على سجلات صالحة في الملف المرفق");
+                    }
+                } catch (err) {
+                    alert("حدث خطأ أثناء قراءة ملف Excel: " + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        refreshAll();
+    </script>
+</body>
+</html>
